@@ -1,3 +1,6 @@
-import keras_vggface
-# print version
-print(keras_vggface.__version__)
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+from keras_vggface.vggface import VGGFace
+
+model = VGGFace(model='resnet50')
