@@ -4,6 +4,7 @@ from PIL import Image
 from numpy import asarray
 from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
+from scipy.spatial.distance import cosine
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -29,5 +30,14 @@ def get_feature_vectors(type):
     return model.predict(processed)
 
 
-ftrs = get_feature_vectors('current')
-print(ftrs)
+document_features = get_feature_vectors('documents')
+current_features = get_feature_vectors('current')
+
+for i in range(0, NUMBER_OF_IMAGES):
+    matchRate = cosine(document_features[i], current_features[i])
+    print('Slika ', i)
+    print('Kosinusova udaljenost: ', matchRate)
+    if matchRate <= 0.5:
+        print("Slike se podudaraju")
+    else:
+        print('Slike se ne podudaraju')
