@@ -9,7 +9,7 @@ from scipy.spatial.distance import cosine
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 BASE_PATH = '/Users/gauss/Projects/faks/osrv/vggface/'
-NUMBER_OF_IMAGES = 1
+NUMBER_OF_IMAGES = 4
 
 
 def load_image(filename):
