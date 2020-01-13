@@ -5,6 +5,7 @@ from numpy import asarray
 from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
 from scipy.spatial.distance import cosine
+from mtcnn.mtcnn import MTCNN
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -12,9 +13,17 @@ BASE_PATH = '/Users/gauss/Projects/faks/osrv/vggface/'
 NUMBER_OF_IMAGES = 4
 
 
+def face_only(full):
+    mtnc = MTCNN()
+    results = mtnc.detect_faces(full)
+    x1, y1, width, height = results[0]['box']
+    return full[y1:y1+height, x1:x1+width]
+
+
 def load_image(filename):
     loaded = pyplot.imread(BASE_PATH+filename)
-    image = Image.fromarray(loaded)
+    face = face_only(loaded)
+    image = Image.fromarray(face)
     image = image.resize((250, 250))
     return asarray(image)
 
