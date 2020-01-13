@@ -2,6 +2,7 @@ import os
 from matplotlib import pyplot
 from PIL import Image
 from numpy import asarray
+from numpy.linalg import norm
 from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
 from scipy.spatial.distance import cosine
@@ -44,7 +45,10 @@ current_features = get_feature_vectors('current')
 
 for i in range(0, NUMBER_OF_IMAGES):
     matchRate = cosine(document_features[i], current_features[i])
+    euclidianDistance = norm(document_features[i] - current_features[i])
+
     print('Slika ', i)
+    print('Euklidska udaljenost je ', euclidianDistance)
     print('Kosinusova udaljenost: ', matchRate)
     if matchRate <= 0.5:
         print("Slike se podudaraju")
